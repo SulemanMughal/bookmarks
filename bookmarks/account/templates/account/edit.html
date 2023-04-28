@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Edit your account{% endblock %}
+{% block content %}
+
+{% include 'account/form_errors.html' with form=user_form  %}
+{% include 'account/form_errors.html' with form=profile_form  %}
+{% include 'account/messages.html'  %}
+
+<div class="container">
+    <div class="row justify-content-center my-5">
+        <div class="col-12 col-md-8 col-lg-6">
+            <h1 class="text-start mb-4 fw-bolder">
+                Edit your account
+            </h1>
+            <p>You can edit your account using the following form</p>
+            <form action="{% url 'edit' %}" method="post" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="col-12 col-lg-8">
+                    <label for="id_first_name" class="form-label">First name</label>
+                    <input type="text" name="first_name" {% if user_form.first_name.value %} value="{{ user_form.first_name.value }}" {% endif %} maxlength="150" id="id_first_name" class="form-control rounded-0 bg-light">
+                    <div class="invalid-feedback">
+                        Please enter a valid first name.
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8 my-3">
+                    <label for="id_last_name" class="form-label">Last name</label>
+                    <input type="text" name="last_name" maxlength="150" id="id_last_name" class="form-control rounded-0 bg-light" {% if user_form.last_name.value %} value="{{ user_form.last_name.value }}" {% endif %}>
+                    <div class="invalid-feedback">
+                        Please enter a valid last name.
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <label for="id_email" class="form-label">Email address</label>
+                    <input type="email" name="email" {% if user_form.email.value %} value="{{ user_form.email.value }}" {% endif %} maxlength="254" id="id_email" class="form-control rounded-0 bg-light" required>
+                    <div class="invalid-feedback">
+                        Please enter a valid email.
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8 my-3">
+                    <label for="id_date_of_birth" class="form-label">Date of birth</label>
+                    <input type="text" name="date_of_birth" id="id_date_of_birth" class="form-control rounded-0 bg-light" {% if profile_form.date_of_birth %} value='{{ profile_form.date_of_birth.value }}' {% endif %} data-toggle="datepicker">
+
+                    
+                    
+                    <div class="invalid-feedback">
+                        Please enter a valid date.
+                    </div>
+                    <small class="text-muted">
+                        <ul class="mt-4"><li>Date should be in YYYY-MM-DD format</li></ul>
+                    </small>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <label for="id_photo" class="form-label">Photo</label>
+                    <input type="file" name="photo" accept="image/*" id="id_photo" class="form-control rounded-0 bg-light"  >
+                    <div class="invalid-feedback">
+                        Please enter a valid file.
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8 my-3">
+                    <input type="submit" value="Save changes" class="btn btn-success rounded-0 text-uppercase p-2">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block extra_js %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css" integrity="sha512-YdYyWQf8AS4WSB0WWdc3FbQ3Ypdm0QCWD2k4hgfqbQbRCJBEgX0iAegkl2S1Evma5ImaVXLBeUkIlP6hQ1eYKQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js" integrity="sha512-RCgrAvvoLpP7KVgTkTctrUdv7C6t7Un3p1iaoPr1++3pybCyCsCZZN7QEHMZTcJTmcJ7jzexTO+eFpHk4OCFAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>
+<script>
+    $('[data-toggle="datepicker"]').datepicker({
+        format: 'yyyy-mm-dd'
+    });
+</script>
+{% endblock extra_js %}

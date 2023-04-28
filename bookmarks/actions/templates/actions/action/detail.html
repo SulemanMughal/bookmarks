@@ -1,0 +1,40 @@
+{% load thumbnail %}
+{% with user=action.user profile=action.user.profile %}
+<div class="card border-0">
+    
+    <div class="card-body">
+        {% if profile.photo %}
+        {% thumbnail user.profile.photo "80x80" crop="100%" as im %}
+        <a href="{{ user.get_absolute_url }}">
+            <img src="{{ im.url }}" alt="{{ user.get_full_name }}" class="img-fluid card-img-top">
+        </a>
+        {% endthumbnail %}
+        {% endif %}
+        {% if action.target %}
+        {% with target=action.target %}
+        {% if target.image %}
+        {% thumbnail target.image "80x80" crop="100%" as im %}
+        <a href="{{ target.get_absolute_url }}">
+            <img src="{{ im.url }}" class="img-fluid">
+        </a>
+        {% endthumbnail %}
+        {% endif %}
+        {% endwith %}
+    {% endif %}
+    <div>
+        <a href="{{ user.get_absolute_url }}" class="card-link fw-bolder text-success">
+            {{ user.first_name }}
+        </a> {{ action.verb }}
+        {% if action.target %}
+            {% with target=action.target %}
+                <a href="{{ target.get_absolute_url }}" class="card-link fw-bolder text-success">{{ target }}</a>
+            {% endwith %}
+        {% endif %}
+        <p>{{ action.created|timesince }} ago</p>
+    </div>
+
+
+</div>
+</div>
+
+{% endwith %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Log-in{% endblock %}
+{% block content %}
+
+
+    <div class="container">
+        <div class="row justify-content-center my-5">
+            <div class="col-12 col-md-8 col-lg-6">
+                <h1 class="text-start mb-4 fw-bolder">
+                    Log-in
+                </h1>
+                <p class="text-start mb-4">Please, use the following form to log-in:</p>
+                <form action="." method="post" class="row g-3 needs-validation" novalidate>
+                    <div class="col-12 col-lg-8">
+                        <label for="id_username" class="form-label">Username</label>
+                        <input type="text" class="form-control rounded-0 bg-light" id="id_username"  required name="username">
+                        <div class="invalid-feedback">
+                            Please enter a valid username.
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-8">
+                        <label for="id_password" class="form-label">Password</label>
+                        <input type="password" class="form-control rounded-0 bg-light" id="id_password"  required name="password">
+                        <div class="invalid-feedback">
+                            Please enter a valid password.
+                        </div>
+                      </div>
+
+                      {% csrf_token %}
+                        <div class="col-12 col-lg-8">
+                        <input type="submit" value="Log-in" class="btn btn-success rounded-0 text-uppercase p-2">
+                        </div>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>
+{% endblock extra_js %}

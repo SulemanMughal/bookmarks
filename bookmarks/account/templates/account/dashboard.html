@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<script src="{% static 'bookmarklet.js' %}"></script>
+<div class="container">
+    <div class="row justify-content-center mt-5 mb-3">
+        <div class="col-12 col-md-8 col-lg-6">
+            <h1 class="text-start mb-4 fw-bolder">
+                Dashboard
+            </h1>
+            {% with total_images_created=request.user.images_created.count %} 
+                <p>Welcome to your dashboard. You have bookmarked {{ total_images_created }} image{{ total_images_created|pluralize }}.</p> 
+            {% endwith %} 
+            <p>You can <a href='{% url "edit" %}' class="card-link fw-bolder text-success">edit your profile</a> or <a href='{% url "password_change" %}' class="card-link fw-bolder text-success ms-0">change your password</a>.</p>
+            
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-12 col-md-8 col-lg-6">
+            <h2 class="text-start mb-4 fw-bolder">What's happening</h2>
+                {% for action in actions %}
+                    {% include "actions/action/detail.html" %}
+                {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Create an account{% endblock %}
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row justify-content-center my-5">
+        <div class="col-12 col-md-8 col-lg-6">
+            <h1 class="text-start mb-4 fw-bolder">
+                Create an account
+            </h1>
+            <p>Please, sign up using the following form</p>
+            <form action="{% url 'register' %}" method="post" class="row g-3 needs-validation mt-3" novalidate>
+                {% csrf_token %}
+                <div class="col-12 col-lg-8">
+                    <label for="id_username" class="form-label">Username</label>
+                    <input type="text" name="username" maxlength="150" required id="id_username" class="form-control rounded-0 bg-light">
+                    <div class="invalid-feedback">
+                        Please enter a valid username.
+                    </div>
+                    <small class="text-muted my-4">
+                        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+                    </small>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <label for="id_first_name" class="form-label">First name</label>
+                    <input type="text" name="first_name" maxlength="150" id="id_first_name" class="form-control rounded-0 bg-light" required>
+                    <div class="invalid-feedback">
+                        Please enter a valid first name.
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <label for="id_email" class="form-label">Email address</label>
+                    <input type="email" name="email" maxlength="254" id="id_email" class="form-control rounded-0 bg-light" required>
+                    <div class="invalid-feedback">
+                        Please enter a valid email.
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <label for="id_password" class="form-label">Password</label>
+                    <input type="password" name="password" required id="id_password" class="form-control rounded-0 bg-light">
+                    <div class="invalid-feedback">
+                        Please enter a valid password.
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <label for="id_password2" class="form-label">Repeat password</label>
+                    <input type="password" name="password2" required id="id_password2" class="form-control rounded-0 bg-light">
+                    <div class="invalid-feedback">
+                        Please enter a valid password.
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <input type="submit" value="Create my account" class="btn btn-success rounded-0 text-uppercase p-2">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block extra_js %}
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>
+{% endblock extra_js %}

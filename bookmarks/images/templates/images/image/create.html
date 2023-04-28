@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Bookmark an image{% endblock %}
+{% block content %}
+{% include 'account/form_errors.html'  %}
+{% include 'account/messages.html'  %}
+
+
+<div class="container">
+    <div class="row justify-content-center my-5">
+        <div class="col-12 col-md-8 col-lg-6">
+            <h1 class="text-start mb-4 fw-bolder">
+                Bookmark an image
+            </h1>
+            {% load thumbnail %}
+                {% thumbnail request.GET.url "300" as im %}
+                <img src="{{ im.url }}" class="image-detail mb-4 text-center" >
+                
+            {% endthumbnail %}
+            <form action="{% url 'create' %}" method="post" enctype="multipart/form-data " class="row g-3 needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="col-12 col-lg-8">
+                    <label for="id_title" class="form-label">Title</label>
+                    <input type="text" name="title" maxlength="200" required id="id_title" required="" class="form-control rounded-0 bg-light">
+                    <div class="invalid-feedback">
+                        Please enter a valid title.
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <label for="id_description" class="form-label">Description</label>
+                    <textarea name="description" cols="40" rows="10" id="id_description" class="form-control rounded-0 bg-light" required=""></textarea>
+                    <div class="invalid-feedback">
+                        Please enter a valid description.
+                    </div>
+                </div>
+
+                <input type="hidden" name="url" id="id_url" value="{{ request.GET.url }}">
+                <div class="col-12 col-lg-8">
+                    <input type="submit" value="Bookmark it!" class="btn btn-success rounded-0 text-uppercase p-2">
+                </div>
+                
+            </form>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block extra_js %}
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>
+{% endblock extra_js %}

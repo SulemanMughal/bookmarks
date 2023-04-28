@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}{{ image.title }}{% endblock %}
+{% block content %}
+
+
+
+
+<div class="container">
+    <div class="row justify-content-center my-5">
+        <div class="col-12">
+            <h1 class="text-center mb-4 fw-bolder">
+                {{ image.title }}
+            </h1>
+        </div>
+    </div>
+    <div class="row justify-content-center my-5">
+        <div class="col-12 col-lg-7">
+            {% load thumbnail %}
+            {% thumbnail image.image "650" as im %}
+                <a href="{{ image.image.url }}"><img src="{{ im.url }}" class="img-fluid"></a>
+            {% endthumbnail %}
+        </div>
+        <div class="col-12 col-lg-4">
+            {% with total_likes=image.users_like.count users_like=image.users_like.all %}
+            <div class="image-info my-4">
+            <div>
+                <span class="count rounded-pill btn btn-outline-success px-5">
+                    <span class="total">{{ total_likes }}</span> like{{ total_likes|pluralize }}
+                </span>
+                <a href="#" data-id="{{ image.id }}" data-action="{% if request.user in users_like %}un{% endif %}like" class="like button btn btn-success p-2 px-5 rounded-0 text-uppercase ms-4">
+                    {% if request.user not in users_like %} Like {% else %} Unlike {% endif %}</a>
+            </div>
+            <div>
+                <p>
+                    {{ image.description|linebreaks }}
+                </p>
+            </div>
+            
+            </div>
+            <div class="image-likes">
+                {% for user in image.users_like.all %}
+                    <div>
+                        <img src="{{ user.profile.photo.url }}" width="250px" height="250px">
+                        <p class="h2 fw-bolder text-success">{{ user.first_name }}</p>
+                    </div>
+                    {% empty %}
+                    <div>
+                        <p>
+                            Nobody likes this image yet.
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endwith %}
+
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function(){
+        $('a.like').click(function(e){
+e.preventDefault();
+$.post('{% url "like" %}',
+{
+id: $(this).data('id'),
+action: $(this).data('action')
+},
+function(data){
+if (data['status'] == 'ok')
+{
+var previous_action = $('a.like').data('action');
+// toggle data-action
+$('a.like').data('action', previous_action == 'like' ? 'unlike' : 'like');
+// toggle link text
+$('a.like').text(previous_action == 'like' ? 'Unlike' :'Like');
+// update total likes
+var previous_likes = parseInt($('span.count .total').
+text());
+$('span.count .total').text(previous_action == 'like' ?
+previous_likes + 1 : previous_likes - 1);
+}
+}
+);
+});
+    })
+</script>
+{% endblock extra_js %}

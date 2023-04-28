@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block title %}People{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center my-5">
+        <div class="col-12 col-md-8 col-lg-6">
+            <h1 class="text-start mb-4 fw-bolder">
+                People
+            </h1>
+            <div class="list-group">
+                {% for user in users %}
+                    <a href="{{ user.get_absolute_url }}" class="list-group-item list-group-item-action " >
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-3">{{ user.get_full_name }}</h5>
+                    </div>
+                    {% thumbnail user.profile.photo "180x180" crop="100%" as im %}
+                        <img src="{{ im.url }}">
+                    {% endthumbnail %}
+                    </a>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
