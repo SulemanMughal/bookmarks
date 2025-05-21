@@ -1,7 +1,8 @@
 
 # Social Website
 
-Create a social application that allows users to share images they find on the web
+**Bookmarks** is a Django-based social application designed for users to discover, share, and organize images from the web. It incorporates various features to enhance user interaction and content management.
+
 ## Topics Convered
 
 - An authentication system for users to register, log in, edit their profile, and change or reset their password
@@ -20,3 +21,56 @@ Create a social application that allows users to share images they find on the w
 - Adding generic relations to models
 - Optimizing QuerySets for related objects
 - Using signals for denormalizing counts
+
+
+[![GitHub - Voblet/bookmarking-for-github: Save and Organize your favorite ...](https://tse2.mm.bing.net/th?id=OIP.D4rHfc0324ABAspquKvNKQE8DF\&pid=Api)](https://github.com/Voblet/bookmarking-for-github)
+
+Here’s a concise README summary for the [SulemanMughal/bookmarks](https://github.com/SulemanMughal/bookmarks) repository:
+
+
+## Technologies Used
+
+* **Backend**: Django
+* **Frontend**: jQuery
+* **Image Handling**: sorl-thumbnail
+* **AJAX**: For dynamic content loading
+* **Database**: PostgreSQL (assumed based on Django's default)
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/SulemanMughal/bookmarks.git
+   cd bookmarks
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Apply migrations:
+
+   ```bash
+   python manage.py migrate
+   ```
+
+4. Create a superuser to access the admin panel:
+
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+5. Run the development server:
+
+   ```bash
+   python manage.py runserver
+   ```
+
+6. Access the application at `http://127.0.0.1:8000/`.
+
+## Contributing
+
+Contributions are welcome! Please fork the repository, make your changes, and submit a pull request.
